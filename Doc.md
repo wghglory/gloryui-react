@@ -106,6 +106,14 @@ Rollup is great to build libraries. We need other rollup plugins for additional 
 - @rollup/plugin-commonjs - Converts commonjs modules to ES6 modules
 - rollup-plugin-dts - rollup your .d.ts files
 
+2 Optimizing plugins:
+
+- rollup-plugin-peer-deps-external - With rollup's peer dependencies plugin we can tell the projects that are using our
+  libraries which dependencies are required (like React) but won't actually bundle a copy of React with the library
+  itself. If the consumer already has React in their project it will use that, otherwise it will get installed when they
+  run npm install.
+- rollup-plugin-terser - minify our bundle and reduce the overall file size
+
 ```bash
 npm i -D rollup @rollup/plugin-node-resolve @rollup/plugin-commonjs @rollup/plugin-typescript rollup-plugin-peer-deps-external rollup-plugin-terser rollup-plugin-dts
 ```
@@ -188,7 +196,9 @@ Next, update `package.json`
 }
 ```
 
-he most important changes are as follows:
+Thanks to `rollup-plugin-peer-deps-external`, we can move react from `devDependencies` to `peerDependencies`.
+
+The most important changes are as follows:
 
 - "main" -- We have defined the output path for commonjs modules
 - "module" -- We have defined the output path for es6 modules
