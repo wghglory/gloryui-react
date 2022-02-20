@@ -427,25 +427,27 @@ In the testing app, upgrade the library and verify.
 ## Adding Tests
 
 ```bash
-npm install @testing-library/react jest @types/jest --save-dev
+npm install @testing-library/react @testing-library/jest-dom @testing-library/user-event  jest @types/jest --save-dev
 ```
 
 `src/components/DrButton/DrButton.test.tsx`:
 
 ```tsx
 import React from 'react';
-import {render} from '@testing-library/react';
+import '@testing-library/jest-dom';
+import {render, screen} from '@testing-library/react';
 
 import DrButton from './DrButton';
 
 describe('DrButton', () => {
   test('renders the DrButton component', () => {
     render(<DrButton label="Hello world!" />);
+    expect(screen.getByText(/hello world/i)).toBeInTheDocument();
   });
 });
 ```
 
-Add `jest.config.js`:
+Add `jest.config.js` or `npx jest --init`:
 
 ```js
 module.exports = {
