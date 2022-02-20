@@ -10,14 +10,15 @@ File structure:
 ```
 📦src
  ┣ 📂components
- ┃ ┣ 📜Button.tsx
- ┃ ┗ 📜index.ts
+ ┃ ┗ 📂DrButton
+ ┃ ┃ ┣ 📜DrButton.css
+ ┃ ┃ ┗ 📜DrButton.tsx
  ┗ 📜index.ts
 ```
 
 ## Create a button component
 
-`src/components/Button.tsx`:
+`src/components/DrButton/DrButton.tsx`:
 
 ```tsx
 import React from 'react';
@@ -26,17 +27,11 @@ export interface ButtonProps {
   label: string;
 }
 
-const Button = (props: ButtonProps) => {
+const DrButton = (props: ButtonProps) => {
   return <button>{props.label}</button>;
 };
 
-export default Button;
-```
-
-`src/components/index.tsx`: export that button
-
-```tsx
-export {default as Button} from './Button';
+export default DrButton;
 ```
 
 finally export all components:
@@ -44,7 +39,7 @@ finally export all components:
 `src/index.ts`:
 
 ```ts
-export * from './components';
+export {default as DrButton} from './components/DrButton/DrButton';
 ```
 
 ## Adding typescript
@@ -204,11 +199,10 @@ he most important changes are as follows:
 File structure:
 
 ```
-.
 ├── src
 │   ├── components
-|   │   ├── Button
-|   │   └── index.ts
+|   │   ├── DrButton
+|   |   │   └── DrButton.tsx
 │   └── index.ts
 ├── package.json
 ├── package-lock.json
@@ -223,16 +217,16 @@ Run `npm run rollup` and see the `dist` folder:
  ┣ 📂cjs
  ┃ ┣ 📂types
  ┃ ┃ ┣ 📂components
- ┃ ┃ ┃ ┣ 📜Button.d.ts
- ┃ ┃ ┃ ┗ 📜index.d.ts
+ ┃ ┃ ┃ ┗ 📂DrButton
+ ┃ ┃ ┃ ┃ ┗ 📜DrButton.d.ts
  ┃ ┃ ┗ 📜index.d.ts
  ┃ ┣ 📜index.js
  ┃ ┗ 📜index.js.map
  ┣ 📂esm
  ┃ ┣ 📂types
  ┃ ┃ ┣ 📂components
- ┃ ┃ ┃ ┣ 📜Button.d.ts
- ┃ ┃ ┃ ┗ 📜index.d.ts
+ ┃ ┃ ┃ ┗ 📂DrButton
+ ┃ ┃ ┃ ┃ ┗ 📜DrButton.d.ts
  ┃ ┃ ┗ 📜index.d.ts
  ┃ ┣ 📜index.js
  ┃ ┗ 📜index.js.map
@@ -300,3 +294,25 @@ authorized.
 
 Those users also need to add a `~/.npmrc` file with the same information. To be more secure however you can provide
 those users with an access token that has only **read privileges**, not write.
+
+## Further Enhancement
+
+If you choose to continue, we will look at how to expand our component library to include a number of extremely useful
+features such as:
+
+- CSS: For exporting components with style
+- Storybook: For testing our components within the library itself as we design them
+- React Testing Library & Jest: For testing our components
+
+## Adding CSS
+
+Before we do any additional configuration, we'll begin by creating a CSS file that will apply some styles to our Button.
+Inside of the Button directory where our component lives, we'll create a file called: Button.css:
+
+`src/components/DrButton/DrButton.css`:
+
+```css
+button {
+  font-size: 60px;
+}
+```
