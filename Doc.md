@@ -557,3 +557,47 @@ A tricky solution is this:
 It can be tricky to troubleshoot issues related to both overlapping and missing dependencies between libraries.
 
 Now we can re-run `npm run storybook`.
+
+## Adding SCSS
+
+Thanks to `rollup-plugin-postcss` you should already be able to simply rename your `.css` file to `.scss` and then
+import `DrButton.scss` and be on your way.
+
+Change `rollup.config.js` external field:
+
+```diff
+-    external: [/\.css$/],
++    external: [/\.scss$/],
+```
+
+```bash
+npm install @storybook/preset-scss css-loader sass sass-loader style-loader --save-dev
+```
+
+Now storybook will have an error: You may need an appropriate loader to handle this file type, currently no loaders are
+configured to process this file. See https://webpack.js.org/concepts#loaders.
+
+All need to do is to add `@storybook/preset-scss` to your main Storybook config:
+
+`.storybook/main.js`:
+
+```diff
+module.exports = {
+  stories: ['../src/**/*.stories.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
+  addons: [
+    '@storybook/addon-links',
+    '@storybook/addon-essentials',
+    '@storybook/addon-interactions',
++    '@storybook/preset-scss',
+  ],
+  framework: '@storybook/react',
+  core: {
+    builder: 'webpack5',
+  },
+};
+```
+
+> One last reminder that it's common to encounter dependency errors with Storybook. Before you begin installing the
+> missing dependencies it asks for, always try deleting package-lock.json and node_modules first and then running npm
+> install again. This will often fix your issue without requiring you to add unnecessary dependencies to your own
+> project.
