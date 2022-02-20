@@ -316,3 +316,100 @@ button {
   font-size: 60px;
 }
 ```
+
+Notice that you will have build error due to the css import in DrButton.tsx:
+
+```diff
++ import './DrButton.css';
+
+const DrButton = (props: ButtonProps) => {
+  return <button>{props.label}</button>;
+};
+```
+
+Now we need to tell rollup how to process that syntax. To do that we use a plugin called `rollup-plugin-postcss`. Run
+the following command:
+
+```bash
+npm install rollup-plugin-postcss --save-dev
+```
+
+Now the `rollup.config.js` is like:
+
+```diff
+import resolve from '@rollup/plugin-node-resolve';
+import commonjs from '@rollup/plugin-commonjs';
+import typescript from '@rollup/plugin-typescript';
+import dts from 'rollup-plugin-dts';
+import {terser} from 'rollup-plugin-terser';
+import peerDepsExternal from 'rollup-plugin-peer-deps-external';
+
++ import postcss from 'rollup-plugin-postcss';
+
+const packageJson = require('./package.json');
+
+export default [
+  // this object defines how the actual Javascript code of our library is generated.
+  {
+    input: 'src/index.ts', // The entrypoint for our library (input) which exports all of our components.
+    output: [
+      {
+        file: packageJson.main,
+        format: 'cjs',
+        sourcemap: true,
+      },
+      {
+        file: packageJson.module,
+        format: 'esm',
+        sourcemap: true,
+      },
+    ],
+    plugins: [
+      peerDepsExternal(),
+      resolve(),
+      commonjs(),
+      typescript({tsconfig: './tsconfig.json'}),
+      terser(),
++      postcss(),
+    ],
+    external: [
+      'react',
+      'react-dom',
+      // 'styled-components'
+    ],
+  },
+  // this object defines how our libraries types are distributed and uses the dts plugin to do so.
+  {
+    input: 'dist/esm/types/index.d.ts',
+    output: [{file: 'dist/index.d.ts', format: 'esm'}],
+    plugins: [dts()],
++    external: [/\.css$/],
+  },
+];
+```
+
+In the dts config we need to specify that `.css` modules are external and should not be processed as part of our type
+definitions (otherwise we will get an error).
+
+Finally we need to update the version number in our package.json file. Remember we are publishing a package so when we
+make changes, we need to ensure we don't impact users of previous versions of our library. Every time we publish we
+should increment the version number:
+
+`package.json`:
+
+```diff
+{
++  "version": "0.0.2",
+-  "version": "0.0.1",
+  ...
+}
+```
+
+Now run these commands:
+
+```bash
+npm run rollup
+npm publish
+```
+
+In the testing app, upgrade the library and verify.
