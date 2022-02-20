@@ -423,3 +423,75 @@ npm publish
 ```
 
 In the testing app, upgrade the library and verify.
+
+## Adding Tests
+
+```bash
+npm install @testing-library/react jest @types/jest --save-dev
+```
+
+`src/components/DrButton/DrButton.test.tsx`:
+
+```tsx
+import React from 'react';
+import {render} from '@testing-library/react';
+
+import DrButton from './DrButton';
+
+describe('DrButton', () => {
+  test('renders the DrButton component', () => {
+    render(<DrButton label="Hello world!" />);
+  });
+});
+```
+
+Add `jest.config.js`:
+
+```js
+module.exports = {
+  testEnvironment: 'jsdom',
+};
+```
+
+`package.json` script:
+
+```diff
+{
+  "scripts": {
+    "rollup": "rollup -c",
++    "test": "jest"
+  },
+}
+```
+
+Now we can run our tests with: `npm test`.
+
+Unfortunately we are going to get an error! The error is when our JSX code is encountered. If you recall we used
+Typescript to handle JSX with our rollup config, and a Typescript plugin for rollup to teach it how to do that. We have
+no such setup in place for Jest unfortunately.
+
+The error: Add `@babel/preset-react` (https://git.io/JfeDR) to the 'presets' section of your Babel config to enable
+transformation.
+
+Let's install all babel plugins:
+
+```bash
+npm install @babel/core @babel/preset-env @babel/preset-react @babel/preset-typescript babel-jest --save-dev
+```
+
+One more thing to config: You'll get an error saying the import of the .css file isn't understood. That makes sense
+because, again, we configured a postcss plugin for rollup to handle that, but we did no such thing for Jest.
+
+Let's add `npm install identity-obj-proxy --save-dev`.
+
+We need to update our Jest config tp include the `moduleNameMapper` property. We've also added `less` and `scss` in
+there for good measure in case you want to expand your project later to use those:
+
+```js
+module.exports = {
+  testEnvironment: 'jsdom',
+  moduleNameMapper: {
+    '.(css|less|scss)$': 'identity-obj-proxy',
+  },
+};
+```
