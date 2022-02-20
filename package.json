@@ -1,6 +1,6 @@
 {
-  "name": "dr-components",
-  "version": "1.0.0",
+  "name": "@wghglory/dr-components",
+  "version": "0.0.1",
   "description": "a react components library",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -26,5 +26,8 @@
   },
   "peerDependencies": {
     "react": "^17.0.2"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/wghglory"
   }
 }

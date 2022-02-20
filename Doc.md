@@ -238,3 +238,54 @@ Run `npm run rollup` and see the `dist` folder:
  ┃ ┗ 📜index.js.map
  ┗ 📜index.d.ts
 ```
+
+## Publish NPM package
+
+Now follow the instructions on Github shown in your new repository for committing your code.
+
+We need to update `package.json` with that information:
+
+```json
+{
+  "name": "@YOUR_GITHUB_USERNAME/YOUR_REPOSITORY_NAME",
+  "version": "0.0.1",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/YOUR_GITHUB_USERNAME"
+  }
+}
+```
+
+You will be updating the field `name` value and adding a new field called `publishConfig`. Note the values above in caps
+are meant to be replaced with your own values. For example my `name` field value would be `@wghlory/dr-components`.
+Notice the `packageConfig` also has your Github account name in it as well, but that value does not lead with the @
+symbol.
+
+Now that we have configured out project, we need to configure our local install of NPM itself to be authorized to
+publish to your Github account. To do this we use a .npmrc file.
+
+This file is **NOT PART OF OUR PROJECT**. This is a global file in a central location. For Mac/Linux users it goes in
+your home directory ~/.npmrc.
+
+```
+registry=https://registry.npmjs.org/
+@YOUR_GITHUB_USERNAME:registry=https://npm.pkg.github.com/
+//npm.pkg.github.com/:_authToken=YOUR_AUTH_TOKEN
+```
+
+Go to your Github profile: **Settings -> Developer Settings -> Personal access tokens**. Or just
+[click this link Click Generate new token](https://github.com/settings/tokens). Give it a name that suits the project
+you are building. Give it an expiry date (Github recommends you don't create tokens with an infinite lifespan for
+security reasons, but that's up to you).
+
+The most important thing is to click the `write:packages` access value. This will give your token permission to read &
+write packages to your Github account.
+
+Now run `npm publish`!
+
+> If you get prompted for login credentials, the username is your Github username and your password is the access token
+> you generated
+
+You can see your package in github: https://github.com/wghglory/dr-components/packages/1263810
+
+You can view it on your Github account by going to your main account dashboard and clicking "packages" along the top to
+the right of "repositories".
