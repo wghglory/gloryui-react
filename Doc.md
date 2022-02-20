@@ -289,3 +289,14 @@ You can see your package in github: https://github.com/wghglory/dr-components/pa
 
 You can view it on your Github account by going to your main account dashboard and clicking "packages" along the top to
 the right of "repositories".
+
+## Using Your Library
+
+Now that your library is live, you'll want to use it!
+
+Note that the instructions for using your library are slightly different if you published to a private repository.
+Everyone (aside from your own machine) who tries to import it is going to get a 404 Not Found error if they are not
+authorized.
+
+Those users also need to add a `~/.npmrc` file with the same information. To be more secure however you can provide
+those users with an access token that has only **read privileges**, not write.
