@@ -1,0 +1,16 @@
+{
+  "name": "dr-components",
+  "version": "1.0.0",
+  "description": "a react components library",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Guanghui Wang",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/react": "^17.0.39",
+    "react": "^17.0.2",
+    "typescript": "^4.5.5"
+  }
+}
