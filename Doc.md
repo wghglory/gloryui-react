@@ -495,3 +495,65 @@ module.exports = {
   },
 };
 ```
+
+## Adding Storybook
+
+```bash
+npx sb init --builder webpack5
+```
+
+> Note as of this writing Storybook still defaults to using webpack 4 which is why we have added the extra builder flag
+
+Create `src/components/DrButton/DrButton.stories.tsx`:
+
+```tsx
+import React from 'react';
+import {ComponentStory, ComponentMeta} from '@storybook/react';
+import DrButton from './DrButton';
+
+// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
+export default {
+  title: 'DrComponentLibrary/DrButton',
+  component: DrButton,
+} as ComponentMeta<typeof DrButton>;
+
+// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
+const Template: ComponentStory<typeof DrButton> = (args) => <DrButton {...args} />;
+
+export const HelloWorld = Template.bind({});
+// More on args: https://storybook.js.org/docs/react/writing-stories/args
+HelloWorld.args = {
+  label: 'Hello world!',
+};
+
+export const ClickMe = Template.bind({});
+ClickMe.args = {
+  label: 'Click me!',
+};
+```
+
+The default export defines where the button will appear in the Storybook. I've chosen DrComponentLibrary as a simple
+name to group our custom components together separately from the examples.
+
+The Template determines which component is actually being rendered, and which default args/props to apply to it.
+
+The Template.bind objects are instances or example states of the component. So in a real project you might have
+something like "LargeButton" and "SmallButton". Since our button is always big I've just used an example of testing the
+button with two different labels.
+
+Now we can run `npm run storybook`.
+
+I got an error: Error: Cannot find module 'react/package.json'.
+[This link helps to solve the issue](https://github.com/storybookjs/storybook/issues/13665). They said "Check if you
+have added react as part of peer dependencies. It has to be there in dependencies also". But that will put `react` as
+dependencies which is not what we want.
+
+A tricky solution is this:
+
+> If you simply run a fresh npm install command it will install all the peerDependencies of the libraries you are using.
+> Before running this you may need to delete your package-lock.json and node_modules directory. They will be regenerated
+> automatically after your fresh install.
+
+It can be tricky to troubleshoot issues related to both overlapping and missing dependencies between libraries.
+
+Now we can re-run `npm run storybook`.
