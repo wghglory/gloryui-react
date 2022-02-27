@@ -1,6 +1,6 @@
 {
   "name": "@wghglory/dr-components",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "a react components library",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -9,10 +9,14 @@
   ],
   "types": "dist/index.d.ts",
   "scripts": {
-    "rollup": "rollup -c",
+    "build": "rm -rf dist && rollup -c",
     "test": "jest",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "publish": "npm run build && npm publish",
+    "version.major": "npm version major",
+    "version.minor": "npm version minor",
+    "version.patch": "npm version patch"
   },
   "author": "Guanghui Wang",
   "license": "ISC",
