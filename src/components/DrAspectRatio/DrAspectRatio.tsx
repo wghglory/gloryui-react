@@ -35,8 +35,7 @@ const DrAspectRatio = ({ratio, containerClass = '', children}: AspectRatioProps)
     >
       {React.Children.map(children, (child) =>
         React.cloneElement(child, {
-          className: child.props.className,
-          style: {position: 'absolute', width: '100%', height: '100%'},
+          className: `${child.props.className} dr-aspect-ratio-child`,
         }),
       )}
     </div>
