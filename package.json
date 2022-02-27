@@ -1,5 +1,5 @@
 {
-  "name": "@wghglory/dr-components",
+  "name": "dr-components",
   "version": "0.0.6",
   "description": "a react components library",
   "main": "dist/cjs/index.js",
@@ -59,7 +59,8 @@
   "peerDependencies": {
     "react": "^17.0.0"
   },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/wghglory"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wghglory/dr-components.git"
   }
 }
