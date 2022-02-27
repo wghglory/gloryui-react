@@ -2,7 +2,11 @@
 
 A simple React components library.
 
-`npm run storybook` to see all components.
+## Get Started
+
+Install the package: `npm install gloryui-react`
+
+See storybook: `npm run storybook`
 
 ## DrAspectRatio
 
