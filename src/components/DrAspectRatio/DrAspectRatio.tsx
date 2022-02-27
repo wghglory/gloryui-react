@@ -4,7 +4,7 @@ import './DrAspectRatio.scss';
 export interface AspectRatioProps {
   ratio: string;
   containerClass?: string;
-  children: React.ReactElement;
+  children: JSX.Element | JSX.Element[];
 }
 
 const DrAspectRatio = ({ratio, containerClass = '', children}: AspectRatioProps) => {
@@ -33,10 +33,12 @@ const DrAspectRatio = ({ratio, containerClass = '', children}: AspectRatioProps)
         paddingBottom: stylePadding,
       }}
     >
-      {React.cloneElement(children, {
-        className: children.props.className,
-        style: {position: 'absolute', width: '100%', height: '100%'},
-      })}
+      {React.Children.map(children, (child) =>
+        React.cloneElement(child, {
+          className: child.props.className,
+          style: {position: 'absolute', width: '100%', height: '100%'},
+        }),
+      )}
     </div>
   );
 };

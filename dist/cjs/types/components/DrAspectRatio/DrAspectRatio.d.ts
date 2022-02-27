@@ -1,9 +1,9 @@
-import React from 'react';
+/// <reference types="react" />
 import './DrAspectRatio.scss';
 export interface AspectRatioProps {
     ratio: string;
     containerClass?: string;
-    children: React.ReactElement;
+    children: JSX.Element | JSX.Element[];
 }
 declare const DrAspectRatio: ({ ratio, containerClass, children }: AspectRatioProps) => JSX.Element;
 export default DrAspectRatio;

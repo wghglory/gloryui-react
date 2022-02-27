@@ -49,3 +49,26 @@ OneOne.args = {
     />
   ),
 };
+
+export const IFrameDemo = Template.bind({});
+// More on args: https://storybook.js.org/docs/react/writing-stories/args
+IFrameDemo.args = {
+  ratio: '16:9',
+  containerClass: 'hello',
+  children: (
+    <>
+      <div className="flex items-center justify-center">
+        Loading Code Editor
+        <div className="ml-4 animate-spin">Loading</div>
+      </div>
+
+      <iframe
+        src="https://google.com"
+        sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+        allow="accelerometer; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; xr-spatial-tracking"
+        title={'title'}
+        className="inset-0"
+      />
+    </>
+  ),
+};
