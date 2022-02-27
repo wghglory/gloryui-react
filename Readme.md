@@ -1,4 +1,4 @@
-# dr-components
+# gloryui-react
 
 A simple React components library.
 

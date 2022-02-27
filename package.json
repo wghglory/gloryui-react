@@ -1,5 +1,5 @@
 {
-  "name": "dr-components",
+  "name": "gloryui-react",
   "version": "0.0.6",
   "description": "a react components library",
   "main": "dist/cjs/index.js",
@@ -61,6 +61,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/wghglory/dr-components.git"
+    "url": "git+https://github.com/wghglory/gloryui-react.git"
   }
 }
