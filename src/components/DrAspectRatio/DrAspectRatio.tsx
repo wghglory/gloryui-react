@@ -4,10 +4,10 @@ import './DrAspectRatio.scss';
 export interface AspectRatioProps {
   ratio: string;
   containerClass?: string;
-  children: JSX.Element | JSX.Element[];
+  children: React.ReactNode;
 }
 
-const DrAspectRatio = ({ratio, containerClass = '', children}: AspectRatioProps) => {
+const DrAspectRatio = ({ ratio, containerClass = '', children }: AspectRatioProps) => {
   let stylePadding = '0';
 
   /* https://www.w3schools.com/howto/howto_css_aspect_ratio.asp
@@ -30,14 +30,17 @@ const DrAspectRatio = ({ratio, containerClass = '', children}: AspectRatioProps)
     <div
       className={`${containerClass} dr-aspect-ratio`}
       style={{
-        paddingBottom: stylePadding,
+        paddingBottom: stylePadding
       }}
     >
-      {React.Children.map(children, (child) =>
-        React.cloneElement(child, {
-          className: `${child.props.className} dr-aspect-ratio-child`,
-        }),
-      )}
+      {React.Children.map(children, (child) => {
+        if (React.isValidElement(child)) {
+          return React.cloneElement(child, {
+            className: `${child.props.className || ''} dr-aspect-ratio-child`
+          } as any);
+        }
+        return child;
+      })}
     </div>
   );
 };
