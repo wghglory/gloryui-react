@@ -1,6 +1,6 @@
 {
   "name": "gloryui-react",
-  "version": "0.0.7",
+  "version": "1.0.0",
   "type": "module",
   "description": "a react components library",
   "main": "dist/cjs/index.js",
