@@ -68,9 +68,11 @@ export default defineConfig((options) => {
     {
       entry: ['src/index.ts'],
       dts: {
-        resolve: true
+        resolve: true,
+        only: true
       },
       outDir: 'dist',
+      format: 'esm',
       external: ['react', 'react-dom']
     }
   ];
