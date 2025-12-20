@@ -13,10 +13,7 @@
     "build": "rm -rf dist && rollup -c",
     "test": "jest",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build",
-    "version.major": "npm version major -m",
-    "version.minor": "npm version minor -m",
-    "version.patch": "npm version patch -m"
+    "build-storybook": "storybook build"
   },
   "author": "Guanghui Wang",
   "license": "ISC",
