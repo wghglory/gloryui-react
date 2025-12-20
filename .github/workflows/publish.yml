@@ -1,0 +1,71 @@
+name: Publish to npm
+
+on:
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - 'package.json'  # Only trigger when package.json changes
+
+jobs:
+  publish:
+    name: Publish to npm
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, '[skip publish]')"
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build package
+        run: npm run build
+
+      - name: Extract version
+        id: package-version
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Publishing version: $VERSION"
+
+      - name: Check if version exists
+        id: check-version
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          VERSION=${{ steps.package-version.outputs.version }}
+          if npm view gloryui-react@$VERSION version > /dev/null 2>&1; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+            echo "Version $VERSION already published"
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+            echo "Version $VERSION is new"
+          fi
+
+      - name: Publish to npm
+        if: steps.check-version.outputs.exists != 'true'
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          npm config set //registry.npmjs.org/:_authToken $NPM_TOKEN
+          npm publish --access public
+
+      - name: Publish summary
+        if: always()
+        run: |
+          if [ "${{ steps.check-version.outputs.exists }}" == "true" ]; then
+            echo "⚠️ Skipped: Version ${{ steps.package-version.outputs.version }} already exists"
+          else
+            echo "✅ Published: Version ${{ steps.package-version.outputs.version }}"
+          fi
+
