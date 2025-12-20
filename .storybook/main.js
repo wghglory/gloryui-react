@@ -1,7 +1,7 @@
 export default {
   stories: ['../src/**/*.stories.@(js|jsx|ts|tsx)'],
 
-  addons: ['@storybook/addon-links', '@storybook/preset-scss', '@chromatic-com/storybook', '@storybook/addon-docs'],
+  addons: ['@storybook/addon-links', '@chromatic-com/storybook', '@storybook/addon-docs'],
 
   framework: {
     name: '@storybook/react-vite',

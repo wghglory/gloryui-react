@@ -13,13 +13,37 @@ export default meta;
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const Template: StoryFn<typeof DrButton> = (args) => <DrButton {...args} />;
 
-export const HelloWorld = Template.bind({});
-// More on args: https://storybook.js.org/docs/react/writing-stories/args
-HelloWorld.args = {
-  label: 'Hello world!'
+export const Default = Template.bind({});
+Default.args = {
+  label: 'Hello world!',
+  variant: 'default',
+  size: 'md'
 };
 
-export const ClickMe = Template.bind({});
-ClickMe.args = {
-  label: 'Click me!'
+export const Outline = Template.bind({});
+Outline.args = {
+  label: 'Outline Button',
+  variant: 'outline',
+  size: 'md'
+};
+
+export const Ghost = Template.bind({});
+Ghost.args = {
+  label: 'Ghost Button',
+  variant: 'ghost',
+  size: 'md'
+};
+
+export const Small = Template.bind({});
+Small.args = {
+  label: 'Small Button',
+  variant: 'default',
+  size: 'sm'
+};
+
+export const Large = Template.bind({});
+Large.args = {
+  label: 'Large Button',
+  variant: 'default',
+  size: 'lg'
 };
